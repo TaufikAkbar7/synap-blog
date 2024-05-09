@@ -1,0 +1,75 @@
+.ant-menu-item-selected {
+  background-color: #005E9D !important;
+}
+  
+.ant-menu-item {
+  color: #FFF !important;
+  font-weight: 700;
+}
+
+.ant-btn-primary {
+  border-radius: 4px !important;
+}
+
+.ant-upload-select-picture-card {
+  border-radius: 6px !important;
+  border-style: solid !important;
+  border: 1px solid #005E9D !important;
+}
+
+.ant-btn > .anticon {
+  position: relative !important;
+  bottom: 2px !important;
+}
+
+.ant-input {
+  border-radius: 6px !important;
+}
+
+.ant-message-success > .anticon {
+  position: relative !important;
+  top: -2px !important;
+}
+
+.ant-tabs-tab {
+  padding: 12px 12px !important;
+}
+
+.ant-tabs-nav-wrap {
+  border-bottom: 1px solid #FFF !important;
+}
+
+.ant-tabs-tab-active {
+  background-color: #008DEB !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn div div h2 {
+  color: #FFF !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn div div span {
+  color: #FFF !important;
+}
+
+.ant-tabs-ink-bar {
+  background-color: transparent !important;
+}
+
+.ant-btn-default {
+  color: #005E9D !important;
+  border: 1px solid #005E9D !important;
+  border-radius: 4px !important;
+}
+
+.ant-comment-content-author-name > span {
+  font-weight: 600 !important;
+  color: #525252 !important;
+}
+
+.ant-comment-content-author-time > span {
+  color: #525252 !important;
+}
+
+.ant-input-disabled {
+  background-color: #CDCDCD !important;
+}

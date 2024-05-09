@@ -1,0 +1,74 @@
+@import './antd-overide.css';
+
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+.custom-btn-default-logout {
+  color: #FFF !important;
+  background-color: #008DEB !important;
+  border-radius: 4px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  padding: 0 32px !important;
+  align-items: center !important;
+}
+
+
+.custom-select .ant-select-selector{
+  background-color: #DADADA !important;
+}
+
+/* width */
+.custom-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #005E9D; 
+}
+
+/* Handle on hover */
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.bg-header-content-type {
+  background: linear-gradient(to top, transparent 92%, #FFFFFF 8%);
+}
+
