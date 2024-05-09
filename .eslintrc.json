@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "next",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "default-param-last": 0,
+    "linebreak-style": 0,
+    "no-param-reassign": ["error", { "props": false }],
+    "no-console": "warn",
+    "max-len": ["error", { "code": 130 }]
+  }
+}
