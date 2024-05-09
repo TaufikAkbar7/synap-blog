@@ -9,8 +9,8 @@ import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'React antd 5',
-  description: 'Boilerplate Next.js antd 5'
+  title: 'Synapsis Blogger',
+  description: 'Website for synapsis blogger'
 }
 
 const inter = Inter({
@@ -28,6 +28,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <Providers>{children}</Providers>
+        <div id="portal-root" />
       </body>
     </html>
   )

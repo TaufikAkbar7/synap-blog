@@ -1,8 +1,17 @@
+'use client'
+
 // react
-import React from 'react'
+import React, { useState } from 'react'
 
 // components
-import { AppLayoutDefault } from '@/components'
+import {
+  AppBaseArticleCard,
+  AppBaseLoading,
+  AppBaseTitle,
+  AppLayoutDefault
+} from '@/components'
+import { useGetAllPosts } from '@/lib/api'
+import { usePagination } from '@/hooks'
 
 type Person = {
   id: number
@@ -11,12 +20,35 @@ type Person = {
 }
 
 export default function Home() {
+  const { data, error, isLoading } = useGetAllPosts({ page: 1 })
+  const paginationRage = usePagination({
+    currentPage: 1,
+    pageSize: 10,
+    siblingCount: 1,
+    totalCount: 100
+  })
+  console.log(paginationRage)
   return (
     <AppLayoutDefault>
-      <div className="shadow-lg rounded-lg bg-white p-5">
-        <span>View a summary of all your customers over the last month.</span>
-        {/* <Table className="mt-5" dataSource={defaultData} columns={columns} /> */}
-      </div>
+      <AppBaseTitle title="Articles" />
+      {isLoading ? (
+        <div className="flex items-center justify-center h-96">
+          <AppBaseLoading />
+        </div>
+      ) : data && data.length ? (
+        <div className="flex flex-wrap gap-5">
+          {data.map(item => (
+            <AppBaseArticleCard
+              key={item.id}
+              title={item.title}
+              description={item.body}
+              navigatePath="ww"
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center h-96">{error}</div>
+      )}
     </AppLayoutDefault>
   )
 }

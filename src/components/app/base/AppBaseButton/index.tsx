@@ -1,14 +1,22 @@
 // react
-import React, { memo } from 'react'
+import React, { forwardRef, memo } from 'react'
 
 // interfaces
 import { IAppBaseButtonProps } from './interfaces'
 
-const AppBaseButton = ({ children, ...rest }: IAppBaseButtonProps) => {
-  return (
-    <button className='bg-black hover:bg-white hover:text-black text-white font-bold py-2 px-4 rounded'></button>
-  )
-}
+const AppBaseButton = forwardRef<HTMLButtonElement, IAppBaseButtonProps>(
+  function AppBaseButton({ children, ...props }, ref) {
+    return (
+      <button
+        {...props}
+        ref={ref}
+        className="bg-black border-black text-white font-bold py-2 px-4 rounded border hover:bg-white hover:text-black"
+      >
+        {children}
+      </button>
+    )
+  }
+)
 
 AppBaseButton.displayName = 'AppBaseButton'
 

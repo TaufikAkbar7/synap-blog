@@ -1,21 +1,24 @@
 // react
 import React, { Suspense } from 'react'
 
+// components
+import { AppBaseLoading } from '@/components'
+
 // tailwind
 import '../assets/styles/globals.css'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <main>
       <Suspense
         fallback={
           <div className="h-screen flex justify-center items-center">
-            loading...
+            <AppBaseLoading />
           </div>
         }
       >
-        <main>{children}</main>
+        {children}
       </Suspense>
-    </div>
+    </main>
   )
 }
