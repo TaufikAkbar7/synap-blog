@@ -5,7 +5,7 @@ import React, { memo } from 'react'
 import { AppBaseTitleProps } from './interfaces'
 
 const AppBaseTitle = ({ title }: AppBaseTitleProps) => {
-  return <h1 className="text-4xl font-bold pb-5">{title}</h1>
+  return <h1 className="text-4xl font-bold">{title}</h1>
 }
 
 AppBaseTitle.displayName = 'AppBaseTitle'

@@ -23,11 +23,11 @@ const AppBaseModal = ({
   return (
     <ReactPortal wrapperId="portal-root">
       <div className="fixed inset-0 bg-[#00000099] flex flex-column justify-center items-center overflow-hidden z-50 p-14">
-        <div className="absolute top-[9rem] flex justify-between items-center w-5/12">
-          <h3 className="text-xl text-black font-semibold">{title}</h3>
-          <button onClick={onClose}>&#x2715;</button>
-        </div>
-        <div className="flex w-2/4 h-3/4 justify-center items-center bg-white rounded-lg text-black">
+        <div className="flex flex-col gap-y-5 p-5 w-2/4 bg-white rounded-lg text-black">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl text-black font-semibold">{title}</h3>
+            <button onClick={onClose}>&#x2715;</button>
+          </div>
           {children}
         </div>
       </div>
