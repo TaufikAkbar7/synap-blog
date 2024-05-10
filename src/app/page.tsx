@@ -1,7 +1,7 @@
 'use client'
 
 // react
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 // components
 import {
@@ -14,7 +14,8 @@ import {
 } from '@/components'
 
 // services
-import { TQuery, useGetAllPosts } from '@/lib/api'
+import { useGetAllPosts } from '@/lib/api'
+import { IResponseUser, TQuery } from '@/lib/interfaces'
 
 // lodash
 import debounce from 'lodash.debounce'
@@ -47,9 +48,9 @@ export default function Home() {
 
   return (
     <AppLayoutDefault>
-      <div className="flex justify-between items-center pb-4">
+      <div className="flex justify-between items-center pb-4 px-4">
         <AppBaseTitle title="Articles" />
-        <div className="flex-none pr-6">
+        <div className="flex-none">
           <AppBaseTextInput
             name="search"
             id="search"
@@ -66,7 +67,7 @@ export default function Home() {
         </div>
       ) : data && data.length ? (
         <div className="flex flex-col gap-y-5">
-          <div className="flex flex-wrap gap-5">
+          <div className="flex justify-center flex-wrap gap-5">
             {data.map(item => (
               <AppBaseArticleCard
                 key={item.id}
