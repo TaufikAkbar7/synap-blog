@@ -27,7 +27,6 @@ import {
 
 // interfaces
 import { IResponseUser, TQuery } from '@/lib/interfaces'
-import { TModalConfirmationType } from '@/components/app/base/AppBaseModalConfirmation/interfaces'
 
 // lodash
 import debounce from 'lodash.debounce'
@@ -38,33 +37,12 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 // yup
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schemaUser } from '@/plugins/yup'
-
-interface IOpenModal {
-  isOpen: boolean
-  id?: number
-  title?: string
-}
-
-interface IModalConfirmation extends IOpenModal {
-  type: TModalConfirmationType
-}
+import { useAppStore } from '@/plugins/zustand'
 
 export default function Users() {
   // use state
   const [page, setPage] = useState<number>(1)
-  const [openModal, setOpenModal] = useState<IOpenModal>({
-    isOpen: false,
-    id: undefined,
-    title: 'Update user'
-  })
   const [search, setSearch] = useState<Partial<TQuery>>()
-  const [openModalConfirmation, setOpenModalConfirmation] =
-    useState<IModalConfirmation>({
-      isOpen: false,
-      id: 0,
-      type: 'warning',
-      title: ''
-    })
 
   // custom hook
   const {
@@ -97,6 +75,10 @@ export default function Users() {
     },
     resolver: yupResolver(schemaUser)
   })
+  const setModalConfirmation = useAppStore(state => state.setModalConfirmation)
+  const modalConfirmation = useAppStore(state => state.modalConfirmation)
+  const setModal = useAppStore(state => state.setModal)
+  const modal = useAppStore(state => state.modal)
 
   // constants value
   const optionsGender = [
@@ -139,7 +121,7 @@ export default function Users() {
     )
 
   const onClickCloseModalEdit = useCallback(() => {
-    setOpenModal({ isOpen: false })
+    setModal({ isOpen: false })
     reset()
   }, [])
 
@@ -147,16 +129,16 @@ export default function Users() {
    * @description handle open modal edit and store data to react hook form using setValue
    * @param data
    */
-  const onClickOpenModalEdit = useCallback((data: IResponseUser) => {
-    setOpenModal({ isOpen: true, id: data.id, title: 'Update user' })
+  const onClickmodalEdit = useCallback((data: IResponseUser) => {
+    setModal({ isOpen: true, id: data.id, title: 'Update user' })
     setValue('name', data.name)
     setValue('email', data.email)
     setValue('gender', data.gender)
     setValue('status', data.status)
   }, [])
 
-  const onClickOpenModalConfimation = useCallback((id: number) => {
-    setOpenModalConfirmation({
+  const onClickmodalConfimation = useCallback((id: number) => {
+    setModalConfirmation({
       isOpen: true,
       id,
       type: 'warning',
@@ -165,7 +147,7 @@ export default function Users() {
   }, [])
 
   const onCloseModalConfimation = useCallback(() => {
-    setOpenModalConfirmation({
+    setModalConfirmation({
       isOpen: false,
       id: 0,
       type: 'warning',
@@ -178,7 +160,7 @@ export default function Users() {
    * @param data
    */
   const onClickModalCreateUser = useCallback(() => {
-    setOpenModal({ isOpen: true, title: 'Create user' })
+    setModal({ isOpen: true, title: 'Create user' })
   }, [])
 
   /**
@@ -188,18 +170,18 @@ export default function Users() {
   const onSubmit: SubmitHandler<Omit<IResponseUser, 'id'>> = useCallback(
     async value => {
       try {
-        if (openModal.id) {
-          await editUser({ id: openModal.id, payload: value })
+        if (modal.id) {
+          await editUser({ id: modal.id, payload: value })
         } else {
           await createUser({ payload: value })
         }
         getUsers()
         onClickCloseModalEdit()
-        setOpenModalConfirmation({
+        setModalConfirmation({
           isOpen: true,
           id: 0,
           type: 'success',
-          title: openModal.id
+          title: modal.id
             ? 'Successfully edit user!'
             : 'Successfully create user!'
         })
@@ -207,7 +189,7 @@ export default function Users() {
         console.error(error)
       }
     },
-    [openModal, getUsers, editUser, setOpenModalConfirmation, createUser]
+    [modal, getUsers, editUser, setModalConfirmation, createUser]
   )
 
   /**
@@ -215,11 +197,11 @@ export default function Users() {
    */
   const onDeleteUser = useCallback(async () => {
     try {
-      if (openModalConfirmation.id) {
-        await deleteUser({ id: openModalConfirmation.id })
+      if (modalConfirmation.id) {
+        await deleteUser({ id: modalConfirmation.id })
       }
       getUsers()
-      setOpenModalConfirmation({
+      setModalConfirmation({
         isOpen: true,
         id: 0,
         type: 'success',
@@ -228,7 +210,7 @@ export default function Users() {
     } catch (error) {
       console.error(error)
     }
-  }, [openModalConfirmation, getUsers, deleteUser, setOpenModalConfirmation])
+  }, [modalConfirmation, getUsers, deleteUser, setModalConfirmation])
 
   /**
    * @description dynamic is loading submit
@@ -239,7 +221,7 @@ export default function Users() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-5 justify-between items-center pb-4 px-10 sm:!flex-row">
+      <div className="flex flex-col gap-y-5 justify-between items-center pb-4 px-5 sm:!flex-row">
         <AppBaseTitle title="Users" />
         <div className="flex flex-wrap justify-center gap-5 sm:flex-nowrap">
           <AppBaseTextInput
@@ -275,8 +257,8 @@ export default function Users() {
                 email={item.email}
                 gender={item.gender}
                 status={item.status}
-                onClickEdit={() => onClickOpenModalEdit(item)}
-                onClickDelete={() => onClickOpenModalConfimation(item.id)}
+                onClickEdit={() => onClickmodalEdit(item)}
+                onClickDelete={() => onClickmodalConfimation(item.id)}
               />
             ))}
           </div>
@@ -293,8 +275,8 @@ export default function Users() {
         <div className="flex items-center justify-center h-96">{error}</div>
       )}
       <AppBaseModal
-        open={openModal.isOpen}
-        title={openModal.title ?? ''}
+        open={modal.isOpen}
+        title={modal.title ?? ''}
         onClose={onClickCloseModalEdit}
       >
         <form
@@ -343,12 +325,12 @@ export default function Users() {
         </form>
       </AppBaseModal>
       <AppBaseModalConfirmation
-        open={openModalConfirmation.isOpen}
+        open={modalConfirmation.isOpen}
         onClose={onCloseModalConfimation}
-        title={openModalConfirmation.title ?? ''}
+        title={modalConfirmation.title ?? ''}
         onOk={onDeleteUser}
         isLoading={isLoadingDeleteUser}
-        type={openModalConfirmation.type}
+        type={modalConfirmation.type}
       />
     </>
   )

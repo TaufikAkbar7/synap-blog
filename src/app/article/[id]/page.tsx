@@ -1,7 +1,7 @@
 'use client'
 
 // react
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 
 // services
 import { useCreateComment, useGetPost, useGetPostComments } from '@/lib/api'
@@ -26,6 +26,7 @@ import { useForm } from 'react-hook-form'
 // yup
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schemaComment } from '@/plugins/yup'
+import { useAppStore } from '@/plugins/zustand'
 
 interface IOpenModal {
   isOpen: boolean
@@ -37,18 +38,6 @@ interface IModalConfirmation extends IOpenModal {
 }
 
 export default function ArticleDetail({ params }: { params: { id: string } }) {
-  // state local
-  const [openModalConfirmation, setOpenModalConfirmation] =
-    useState<IModalConfirmation>({
-      isOpen: false,
-      type: 'success',
-      title: ''
-    })
-  const [openModal, setOpenModal] = useState<IOpenModal>({
-    isOpen: false,
-    title: 'Post comment'
-  })
-
   // custom hook
   const { data, isLoading, error } = useGetPost({ id: params.id })
   const { isLoading: isLoadingCreateComment, trigger: createComment } =
@@ -58,7 +47,6 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
     isLoading: isLoadingComments,
     mutate: getComments
   } = useGetPostComments({ id: params.id })
-
   const {
     handleSubmit,
     register,
@@ -72,9 +60,13 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
     },
     resolver: yupResolver(schemaComment)
   })
+  const setModalConfirmation = useAppStore(state => state.setModalConfirmation)
+  const modalConfirmation = useAppStore(state => state.modalConfirmation)
+  const setModal = useAppStore(state => state.setModal)
+  const modal = useAppStore(state => state.modal)
 
   const onCloseModalConfimation = useCallback(() => {
-    setOpenModalConfirmation({
+    setModalConfirmation({
       isOpen: false,
       type: 'success',
       title: ''
@@ -82,16 +74,16 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
   }, [])
 
   const onClickOpenCloseModalComment = useCallback(() => {
-    setOpenModal(prev => ({ isOpen: !prev.isOpen, title: prev.title }))
+    setModal({ isOpen: !modal.isOpen, title: 'Post Comment' })
     reset()
-  }, [setOpenModal])
+  }, [setModal, modal])
 
   const onSubmit = useCallback(
     async (value: IPayloadComment) => {
       try {
         await createComment({ id: params.id, payload: value })
         onClickOpenCloseModalComment()
-        setOpenModalConfirmation({
+        setModalConfirmation({
           isOpen: true,
           type: 'success',
           title: 'Successfully post a comment!'
@@ -105,7 +97,7 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
       createComment,
       onClickOpenCloseModalComment,
       getComments,
-      setOpenModalConfirmation
+      setModalConfirmation
     ]
   )
 
@@ -166,8 +158,8 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
         <div className="flex items-center justify-center h-96">{error}</div>
       )}
       <AppBaseModal
-        open={openModal.isOpen}
-        title={openModal.title ?? ''}
+        open={modal.isOpen}
+        title={modal.title ?? ''}
         onClose={onClickOpenCloseModalComment}
       >
         <form
@@ -208,12 +200,12 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
         </form>
       </AppBaseModal>
       <AppBaseModalConfirmation
-        open={openModalConfirmation.isOpen}
+        open={modalConfirmation.isOpen}
         onClose={onCloseModalConfimation}
-        title={openModalConfirmation.title ?? ''}
+        title={modalConfirmation.title ?? ''}
         isLoading={false}
         onOk={() => {}}
-        type={openModalConfirmation.type}
+        type={modalConfirmation.type}
       />
     </>
   )
