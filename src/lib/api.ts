@@ -9,7 +9,10 @@ import {
   IResponseUser,
   TTriggerArgsUpdateUser,
   TTriggerArgsDeleteUser,
-  TTriggerArgsPostUser
+  TTriggerArgsPostUser,
+  IResponseComment,
+  TTriggerArgsCreateComment,
+  IPayloadComment
 } from './interfaces'
 
 const queryParams = (obj: any) => {
@@ -46,6 +49,47 @@ export const useGetAllPosts = ({
     isLoading: isLoading,
     paginationInfo: getPaginationInfo
   } as IResponseType<IResponsePosts[]>
+}
+
+export const useGetPost = ({ id = '1' }: { id: string }) => {
+  const { data, error, isLoading } = useSWR(`get-post`, () =>
+    axiosInstance.get(`/posts/${id}`)
+  )
+
+  return {
+    data: data?.data,
+    error: error,
+    isLoading: isLoading
+  } as IResponseType<IResponsePosts>
+}
+
+export const useGetPostComments = ({ id = '1' }: { id: string }) => {
+  const { data, error, isLoading, mutate } = useSWR(
+    [`get-post-comments-${id}`],
+    () => axiosInstance.get(`/posts/${id}/comments`)
+  )
+
+  return {
+    data: data?.data,
+    error: error,
+    isLoading: isLoading,
+    mutate: mutate
+  } as IResponseType<IResponseComment[]>
+}
+
+export const useCreateComment = () => {
+  const { data, error, isMutating, trigger } = useSWRMutation(
+    `user-create-comment`,
+    (_, { arg }: { arg: { id: string; payload: IPayloadComment } }) =>
+      axiosInstance.post(`/posts/${arg.id}/comments`, arg.payload)
+  )
+
+  return {
+    data: data?.data,
+    error: error,
+    isLoading: isMutating,
+    trigger: trigger
+  } as IResponseTypeMutation<IResponseComment, TTriggerArgsCreateComment>
 }
 
 export const useCreateUser = () => {

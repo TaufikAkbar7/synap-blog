@@ -49,7 +49,7 @@ interface IModalConfirmation extends IOpenModal {
   type: TModalConfirmationType
 }
 
-const Users = () => {
+export default function Users() {
   // use state
   const [page, setPage] = useState<number>(1)
   const [openModal, setOpenModal] = useState<IOpenModal>({
@@ -199,7 +199,9 @@ const Users = () => {
           isOpen: true,
           id: 0,
           type: 'success',
-          title: openModal.id ? 'Successfully edit user!' : 'Successfully create user!'
+          title: openModal.id
+            ? 'Successfully edit user!'
+            : 'Successfully create user!'
         })
       } catch (error) {
         console.error(error)
@@ -237,9 +239,9 @@ const Users = () => {
 
   return (
     <>
-      <div className="flex flex-wrap gap-y-5 justify-between items-center pb-4 px-4">
+      <div className="flex flex-col gap-y-5 justify-between items-center pb-4 px-10 sm:!flex-row">
         <AppBaseTitle title="Users" />
-        <div className="flex flex-wrap gap-5 sm:flex-nowrap">
+        <div className="flex flex-wrap justify-center gap-5 sm:flex-nowrap">
           <AppBaseTextInput
             name="search"
             id="search"
@@ -247,9 +249,10 @@ const Users = () => {
             label="Search"
             placeholder="search name..."
             onChange={onChangeSearch}
+            className="w-full"
           />
           <AppBaseButton
-            className="w-full sm:!w-44"
+            className="w-auto sm:!w-44"
             disabled={isLoadingCreateUser}
             loading={isLoadingCreateUser}
             onClick={onClickModalCreateUser}
@@ -350,5 +353,3 @@ const Users = () => {
     </>
   )
 }
-
-export default Users

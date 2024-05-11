@@ -11,9 +11,13 @@ import Link from 'next/link'
 
 type TProps = {
   children: React.ReactNode
+  containerClass?: string
 }
 
-function AppLayoutDefault({ children }: TProps) {
+function AppLayoutDefault({
+  children,
+  containerClass = 'py-10 px-14 w-screen'
+}: TProps) {
   const pathname = usePathname()
   const menus = [
     {
@@ -51,8 +55,12 @@ function AppLayoutDefault({ children }: TProps) {
             ))}
           </ul>
         </nav>
-        <div>
-          <section className="py-10 px-14">{children}</section>
+        <div
+          className={
+            containerClass ? 'flex items-center justify-center w-full' : ''
+          }
+        >
+          <section className={containerClass}>{children}</section>
         </div>
       </div>
     </section>

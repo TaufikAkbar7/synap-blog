@@ -4,7 +4,7 @@ import React from 'react'
 // components
 import { AppLayoutDefault } from '@/components'
 
-export default function UserssLayout({
+export default function UsersLayout({
   children
 }: {
   children: React.ReactNode

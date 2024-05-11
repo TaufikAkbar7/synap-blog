@@ -38,7 +38,7 @@ const AppBaseArticleCard = ({
   }, [description])
 
   return (
-    <div className="flex flex-col justify-between gap-y-10 p-6 border border-black rounded-lg w-[28rem]">
+    <div className="flex flex-col justify-between gap-y-10 p-6 border border-black rounded-lg w-[19rem] sm:!w-[28rem]">
       <div className="flex flex-col gap-y-5">
         <h3 className="text-xl font-semibold">{title}</h3>
         <h5 className="text-sm">{renderArticleBody}</h5>

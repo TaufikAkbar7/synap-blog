@@ -48,7 +48,7 @@ export default function Home() {
 
   return (
     <AppLayoutDefault>
-      <div className="flex justify-between items-center pb-4 px-4">
+      <div className="flex flex-col justify-between items-center pb-4 gap-y-5 px-4 sm:!flex-row">
         <AppBaseTitle title="Articles" />
         <div className="flex-none">
           <AppBaseTextInput
@@ -73,7 +73,7 @@ export default function Home() {
                 key={item.id}
                 title={item.title}
                 description={item.body}
-                navigatePath="ww"
+                navigatePath={`/article/${item.id}`}
               />
             ))}
           </div>

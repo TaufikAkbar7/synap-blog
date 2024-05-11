@@ -28,7 +28,8 @@ export interface IResponseType<T> {
   mutate: any
 }
 
-export interface IResponseTypeMutation<T, K> extends IResponseType<T> {
+export interface IResponseTypeMutation<T, K>
+  extends Omit<IResponseType<T>, 'mutate'> {
   trigger: K
 }
 
@@ -66,4 +67,18 @@ export type TTriggerArgsPostUser = TriggerWithArgs<
   any,
   'create-user',
   { payload: Omit<IResponseUser, 'id'> }
+>
+
+export interface IResponseComment extends Omit<TQuery, 'user_id' | 'title'> {
+  id: number
+  post_id: number
+}
+
+export interface IPayloadComment extends Omit<TQuery, 'user_id' | 'title'> {}
+
+export type TTriggerArgsCreateComment = TriggerWithArgs<
+  AxiosResponse<any, any>,
+  any,
+  'user-create-comment',
+  { id: string; payload: IPayloadComment }
 >
