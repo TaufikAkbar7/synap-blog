@@ -18,7 +18,10 @@ const onResponseError = (error: any): Promise<AxiosError> => {
 }
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_ENDPOINT_API as string
+  baseURL: process.env.NEXT_PUBLIC_ENDPOINT_API as string,
+  headers: {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`
+  }
 })
 
 axiosInstance.interceptors.request.use(

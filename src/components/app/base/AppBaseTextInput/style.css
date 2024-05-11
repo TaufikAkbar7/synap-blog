@@ -1,0 +1,64 @@
+textarea {
+  resize: none;
+}
+
+label {
+  position: absolute;
+  font-size: 0.75rem;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  color: gray;
+  padding: 0 0.3rem;
+  margin: 0 0.5rem;
+  transition: 0.1s ease-out;
+  transform-origin: left top;
+  pointer-events: none;
+}
+
+input, select, textarea {
+  font-size: 0.9385rem;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 0.75rem 0.7rem;
+  color: gray;
+  transition: 0.1s ease-out;
+  width: 100%;
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  font-size: 0.938rem;
+}
+
+input:focus+label, select:focus+label, textarea:focus+label {
+  top: 0;
+  transform: translateY(-50%) scale(0.9) !important;
+  color: #000;
+}
+
+input:not(:placeholder-shown)+label, select:not(:placeholder-shown)+label, textarea:not(:placeholder-shown)+label {
+  top: 0;
+  transform: translateY(-50%) scale(0.9) !important;
+}
+
+input:not(:focus)::placeholder, select:not(:focus)::placeholder, textarea:not(:focus)::placeholder {
+  opacity: 0;
+}
+
+input:focus {
+  border: 3px solid #000 !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

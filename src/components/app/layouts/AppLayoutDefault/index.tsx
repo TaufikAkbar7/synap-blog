@@ -6,70 +6,61 @@ import React, { memo, useCallback, useState } from 'react'
 // react router
 import { useRouter, usePathname } from 'next/navigation'
 
-// assets
-import LogoutIcon from '@/assets/svg/ic-logout.svg'
-
-// store
-import { useAuthStore } from '@/plugins/zustand'
+// next link
+import Link from 'next/link'
 
 type TProps = {
   children: React.ReactNode
+  containerClass?: string
 }
 
-function AppLayoutDefault({ children }: TProps) {
-  const router = useRouter()
+function AppLayoutDefault({
+  children,
+  containerClass = 'py-10 px-14 w-screen'
+}: TProps) {
   const pathname = usePathname()
-  const [current, setCurrent] = useState(pathname)
-  const logout = useAuthStore(state => state.logout)
-
-  const commandanMenus = [
+  const menus = [
     {
-      label: 'Home',
-      key: '/'
+      label: 'Articles',
+      link: '/'
+    },
+    {
+      label: 'Users',
+      link: '/users'
     }
   ]
-
-  /**
-   * @param {MenuProps} event
-   * @returns void
-   */
-  const onClickMenu = useCallback(
-    (e: any) => {
-      setCurrent(e.key)
-      router.push(e.key)
-    },
-    [setCurrent, router]
-  )
-
-  /**
-   * @returns void
-   */
-  const onClickLogout = useCallback(() => {
-    logout()
-  }, [logout])
 
   return (
     <section>
       <div className="!min-h-screen">
-        <aside className="!bg-[#008DEB] py-10">
-          <div className="fixed flex flex-col justify-center w-72">
-            <h1 className="font-semibold text-xl text-white text-center">
-              Boilerplate Next Antd
-            </h1>
-            {/* <Menu
-              className="!bg-transparent !mt-5 !border-none"
-              onClick={onClickMenu}
-              selectedKeys={[current]}
-              mode="vertical"
-              items={commandanMenus}
-            /> */}
-
-            <div className="flex flex-col items-center justify-end mt-96">
-            </div>
-          </div>
-        </aside>
-        <div>
-          <section className="p-10">{children}</section>
+        <nav className="!bg-black p-5 flex flex-row items-center justify-between w-full text-white">
+          <Link
+            href="/"
+            prefetch={false}
+            className="font-semibold text-xl text-center text-2xl"
+          >
+            Synapsis Blogger 🤙
+          </Link>
+          <ul className="flex items-center gap-10">
+            {menus.map(menu => (
+              <li key={menu.link}>
+                <Link
+                  href={menu.link}
+                  prefetch={false}
+                  className={pathname === menu.link ? 'font-bold' : ''}
+                >
+                  {menu.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div
+          className={
+            containerClass ? 'flex items-center justify-center w-full' : ''
+          }
+        >
+          <section className={containerClass}>{children}</section>
         </div>
       </div>
     </section>
