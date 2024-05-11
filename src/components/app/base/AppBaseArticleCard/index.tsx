@@ -24,7 +24,7 @@ const AppBaseArticleCard = ({
    */
   const onNavigate = useCallback(
     () => router.push(navigatePath),
-    [navigatePath]
+    [navigatePath, router]
   )
 
   /**

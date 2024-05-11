@@ -17,7 +17,6 @@ import {
 } from '@/components'
 
 // interfaces
-import { TModalConfirmationType } from '@/components/app/base/AppBaseModalConfirmation/interfaces'
 import { IPayloadComment } from '@/lib/interfaces'
 
 // react hook form
@@ -27,15 +26,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schemaComment } from '@/plugins/yup'
 import { useAppStore } from '@/plugins/zustand'
-
-interface IOpenModal {
-  isOpen: boolean
-  title?: string
-}
-
-interface IModalConfirmation extends IOpenModal {
-  type: TModalConfirmationType
-}
+import Image from 'next/image'
 
 export default function ArticleDetail({ params }: { params: { id: string } }) {
   // custom hook
@@ -71,12 +62,12 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
       type: 'success',
       title: ''
     })
-  }, [])
+  }, [setModalConfirmation])
 
   const onClickOpenCloseModalComment = useCallback(() => {
     setModal({ isOpen: !modal.isOpen, title: 'Post Comment' })
     reset()
-  }, [setModal, modal])
+  }, [setModal, modal, reset])
 
   const onSubmit = useCallback(
     async (value: IPayloadComment) => {
@@ -97,7 +88,8 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
       createComment,
       onClickOpenCloseModalComment,
       getComments,
-      setModalConfirmation
+      setModalConfirmation,
+      params.id
     ]
   )
 
@@ -109,7 +101,10 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
         </div>
       ) : data ? (
         <div className="flex flex-col gap-y-5 px-5 lg:px-0">
-          <img
+          <Image
+            width={288}
+            height={288}
+            alt="image-article"
             className="rounded-lg w-full object-cover h-[18rem] md:!h-[24rem]"
             src="https://fastly.picsum.photos/id/13/2500/1667.jpg?hmac=SoX9UoHhN8HyklRA4A3vcCWJMVtiBXUg0W4ljWTor7s"
           />
@@ -135,8 +130,11 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
             <div className="flex flex-col gap-y-5 mt-4">
               {listComments.map(comment => (
                 <div key={comment.id} className="flex gap-x-5">
-                  <img
+                  <Image
                     src="https://picsum.photos/200"
+                    width={56}
+                    height={56}
+                    alt="image-comment"
                     className="w-14 h-14 object-contain rounded-full"
                   />
                   <div className="flex flex-col gap-y-1">

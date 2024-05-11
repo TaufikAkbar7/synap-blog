@@ -1,5 +1,9 @@
 import { StateCreator } from 'zustand'
-import { IAppSlice, IModalConfirmation, IOpenModal } from '../interfaces/app.interface'
+import {
+  IAppSlice,
+  IModalConfirmation,
+  IOpenModal
+} from '../interfaces/app.interface'
 
 const createAppSlice: StateCreator<IAppSlice> = set => ({
   errorMessage: '',
@@ -22,7 +26,7 @@ const createAppSlice: StateCreator<IAppSlice> = set => ({
   },
   setModal(value: IOpenModal) {
     set(() => ({ modal: { ...value } }))
-  },
+  }
 })
 
 export default createAppSlice

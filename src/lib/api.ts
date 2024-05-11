@@ -52,7 +52,7 @@ export const useGetAllPosts = ({
 }
 
 export const useGetPost = ({ id = '1' }: { id: string }) => {
-  const { data, error, isLoading } = useSWR(`get-post`, () =>
+  const { data, error, isLoading } = useSWR('get-post', () =>
     axiosInstance.get(`/posts/${id}`)
   )
 
@@ -79,7 +79,7 @@ export const useGetPostComments = ({ id = '1' }: { id: string }) => {
 
 export const useCreateComment = () => {
   const { data, error, isMutating, trigger } = useSWRMutation(
-    `user-create-comment`,
+    'user-create-comment',
     (_, { arg }: { arg: { id: string; payload: IPayloadComment } }) =>
       axiosInstance.post(`/posts/${arg.id}/comments`, arg.payload)
   )
@@ -94,9 +94,9 @@ export const useCreateComment = () => {
 
 export const useCreateUser = () => {
   const { data, error, isMutating, trigger } = useSWRMutation(
-    `create-user`,
+    'create-user',
     (_, { arg }: { arg: { payload: Omit<IResponseUser, 'id'> } }) =>
-      axiosInstance.post(`/users`, arg.payload)
+      axiosInstance.post('/users', arg.payload)
   )
 
   return {
@@ -137,7 +137,7 @@ export const useGetAllUsers = ({
 }
 
 export const useGetUser = (id: number) => {
-  const { data, error, isLoading } = useSWR(`get-detail-user`, () =>
+  const { data, error, isLoading } = useSWR('get-detail-user', () =>
     axiosInstance.get(`/user/${id}`)
   )
 
@@ -150,7 +150,7 @@ export const useGetUser = (id: number) => {
 
 export const useEditUser = () => {
   const { data, error, isMutating, trigger } = useSWRMutation(
-    `update-user`,
+    'update-user',
     (_, { arg }: { arg: { id: number; payload: Omit<IResponseUser, 'id'> } }) =>
       axiosInstance.put(`/users/${arg.id}`, arg.payload)
   )
@@ -165,7 +165,7 @@ export const useEditUser = () => {
 
 export const useDeleteUser = () => {
   const { data, error, isMutating, trigger } = useSWRMutation(
-    `delete-user`,
+    'delete-user',
     (_, { arg }: { arg: { id: number } }) =>
       axiosInstance.delete(`/users/${arg.id}`)
   )

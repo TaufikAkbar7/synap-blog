@@ -123,28 +123,34 @@ export default function Users() {
   const onClickCloseModalEdit = useCallback(() => {
     setModal({ isOpen: false })
     reset()
-  }, [])
+  }, [reset, setModal])
 
   /**
    * @description handle open modal edit and store data to react hook form using setValue
    * @param data
    */
-  const onClickmodalEdit = useCallback((data: IResponseUser) => {
-    setModal({ isOpen: true, id: data.id, title: 'Update user' })
-    setValue('name', data.name)
-    setValue('email', data.email)
-    setValue('gender', data.gender)
-    setValue('status', data.status)
-  }, [])
+  const onClickmodalEdit = useCallback(
+    (data: IResponseUser) => {
+      setModal({ isOpen: true, id: data.id, title: 'Update user' })
+      setValue('name', data.name)
+      setValue('email', data.email)
+      setValue('gender', data.gender)
+      setValue('status', data.status)
+    },
+    [setModal, setValue]
+  )
 
-  const onClickmodalConfimation = useCallback((id: number) => {
-    setModalConfirmation({
-      isOpen: true,
-      id,
-      type: 'warning',
-      title: 'Are you sure want delete this user?'
-    })
-  }, [])
+  const onClickmodalConfimation = useCallback(
+    (id: number) => {
+      setModalConfirmation({
+        isOpen: true,
+        id,
+        type: 'warning',
+        title: 'Are you sure want delete this user?'
+      })
+    },
+    [setModalConfirmation]
+  )
 
   const onCloseModalConfimation = useCallback(() => {
     setModalConfirmation({
@@ -153,7 +159,7 @@ export default function Users() {
       type: 'warning',
       title: ''
     })
-  }, [])
+  }, [setModalConfirmation])
 
   /**
    * @description handle open modal edit and store data to react hook form using setValue
@@ -161,7 +167,7 @@ export default function Users() {
    */
   const onClickModalCreateUser = useCallback(() => {
     setModal({ isOpen: true, title: 'Create user' })
-  }, [])
+  }, [setModal])
 
   /**
    * @description handle submit edit user
@@ -189,7 +195,14 @@ export default function Users() {
         console.error(error)
       }
     },
-    [modal, getUsers, editUser, setModalConfirmation, createUser]
+    [
+      modal,
+      getUsers,
+      editUser,
+      setModalConfirmation,
+      createUser,
+      onClickCloseModalEdit
+    ]
   )
 
   /**

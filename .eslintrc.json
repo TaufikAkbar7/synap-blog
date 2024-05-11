@@ -16,6 +16,6 @@
     "default-param-last": 0,
     "linebreak-style": 0,
     "no-param-reassign": ["error", { "props": false }],
-    "max-len": ["error", { "code": 150 }]
+    "max-len": ["error", { "code": 200 }]
   }
 }

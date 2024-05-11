@@ -1,14 +1,11 @@
 // react
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { createPortal } from 'react-dom'
 
 // interfaces
-import { IAppBaseReactPortalProps } from './interfaces'
+import { IReactPortalProps } from './interfaces'
 
-const AppBaseReactPortal = ({
-  children,
-  wrapperId
-}: IAppBaseReactPortalProps) => {
+const AppBaseReactPortal = ({ children, wrapperId }: IReactPortalProps) => {
   let getElement = document.getElementById(wrapperId)
 
   return createPortal(children, getElement as HTMLElement)

@@ -2,7 +2,6 @@
 
 // react
 import React, { memo } from 'react'
-import { createPortal } from 'react-dom'
 
 // interfaces
 import { IAppBaseModalProps } from './interfaces'
