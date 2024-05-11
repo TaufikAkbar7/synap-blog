@@ -1,10 +1,10 @@
 'use client'
 
 // react
-import React, { memo, useCallback, useState } from 'react'
+import React, { memo } from 'react'
 
 // react router
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 // next link
 import Link from 'next/link'

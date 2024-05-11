@@ -15,7 +15,7 @@ import {
 
 // services
 import { useGetAllPosts } from '@/lib/api'
-import { IResponseUser, TQuery } from '@/lib/interfaces'
+import { TQuery } from '@/lib/interfaces'
 
 // lodash
 import debounce from 'lodash.debounce'
@@ -40,10 +40,12 @@ export default function Home() {
    */
   const onChangeSearch: React.ChangeEventHandler<HTMLInputElement> | undefined =
     useCallback(
-      debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch({ title: e.target.value })
-      }, 500),
-      []
+      debounce(
+        (e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearch({ title: e.target.value }),
+        500
+      ),
+      [setSearch]
     )
 
   return (

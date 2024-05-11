@@ -1,4 +1,4 @@
-import { TModalConfirmationType } from "@/components/app/base/AppBaseModalConfirmation/interfaces"
+import { TModalConfirmationType } from '@/components/app/base/AppBaseModalConfirmation/interfaces'
 
 /* eslint-disable no-unused-vars */
 export interface IAppSlice {

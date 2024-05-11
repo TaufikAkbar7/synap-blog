@@ -1,5 +1,5 @@
 // react
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 
 // custom hooks
 import { usePagination } from '@/hooks'
@@ -39,19 +39,19 @@ const AppBasePagination = ({
     return null
   }
 
-  const onNext = useCallback(() => {
+  const onNext = () => {
     onPageChange(currentPage + 1)
-  }, [currentPage, onPageChange])
+  }
 
-  const onPrevious = useCallback(() => {
+  const onPrevious = () => {
     onPageChange(currentPage - 1)
-  }, [currentPage, onPageChange])
+  }
 
   return (
     <ul className="flex list-none px-2 h-24 text-center justify-center items-center gap-x-5 rounded-xl text-sm min-w-8 box-border">
       <li
         className={`${paginationItemArrowClass} ${
-          currentPage !== 1 ? 'cursor-pointer' : 'cursor-not-allowed'
+          currentPage === 1 ? '!cursor-not-allowed' : ''
         }`}
         onClick={currentPage !== 1 ? onPrevious : undefined}
       >
@@ -68,7 +68,7 @@ const AppBasePagination = ({
               key={pageNumberIndex}
               className={
                 currentPage === pageNumber
-                  ? `px-3.5 py-2 font-semibold border border-black rounded-lg cursor-pointer`
+                  ? 'px-3.5 py-2 font-semibold border border-black rounded-lg cursor-pointer'
                   : 'px-3.5 py-2 cursor-pointer border border-transparent hover:border-black rounded-lg'
               }
               onClick={() =>
@@ -86,9 +86,9 @@ const AppBasePagination = ({
 
       <li
         className={`${paginationItemArrowClass} ${
-          lastPage && lastPage >= currentPage
-            ? 'cursor-pointer'
-            : 'cursor-not-allowed'
+          typeof lastPage === 'number' && lastPage >= currentPage
+            ? ''
+            : '!cursor-not-allowed'
         }`}
         onClick={lastPage ? onNext : undefined}
       >

@@ -1,7 +1,7 @@
 'use client'
 
 // react
-import React, { forwardRef, memo, useImperativeHandle, useRef } from 'react'
+import React, { forwardRef, memo } from 'react'
 
 // interfaces
 import { IAppBaseTextInputProps } from './interfaces'
@@ -12,6 +12,7 @@ import './style.css'
 const AppBaseTextInput = forwardRef<void, IAppBaseTextInputProps>(
   function AppBaseTextInput(
     { id, label, placeholder = '', register, ...props },
+    /* eslint-disable no-unused-vars */
     ref
   ) {
     // const inputRef = useRef<HTMLInputElement>(null)
